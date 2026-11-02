@@ -1,0 +1,1321 @@
+{
+  "names": {
+    "Atlanta United": "亚特兰大联",
+    "Feyenoord Rotterdam": "费耶诺德",
+    "Everton": "埃弗顿",
+    "Werder Bremen": "云达不莱梅",
+    "Chengdu Rongcheng FC": "成都蓉城",
+    "Qingdao West Coast": "青岛西海岸",
+    "Bayern Munich": "拜仁慕尼黑",
+    "Bournemouth": "伯恩茅斯",
+    "Juventus": "尤文图斯",
+    "Rayo Vallecano": "巴列卡诺",
+    "DC United": "华盛顿联",
+    "Slavia Prague": "布拉格斯拉维亚",
+    "Racing Santander": "桑坦德竞技",
+    "Vancouver Whitecaps FC": "温哥华白浪",
+    "Getafe": "赫塔费",
+    "Udinese": "乌迪内斯",
+    "San Jose Earthquakes": "圣何塞地震",
+    "Seattle Sounders FC": "西雅图海湾人",
+    "FC St. Pauli": "圣保利",
+    "FC Porto": "波尔图",
+    "Lorient": "洛里昂",
+    "Minnesota United": "明尼苏达联",
+    "Young Boys": "年轻人",
+    "Levante": "莱万特",
+    "Celta Vigo": "塞尔塔",
+    "Orlando City": "奥兰多城",
+    "Shanghai Port FC": "上海海港",
+    "Chengdu Rongcheng": "成都蓉城",
+    "TSG Hoffenheim": "霍芬海姆",
+    "Sassuolo": "萨索洛",
+    "Houston Dynamo": "休斯敦迪纳摩",
+    "Qarabağ": "卡拉巴赫",
+    "Wuhan Three Towns": "武汉三镇",
+    "Coventry City": "考文垂",
+    "LASK Linz": "林茨",
+    "Braga": "布拉加",
+    "New York Red Bulls": "纽约红牛",
+    "Colorado Rapids": "科罗拉多急流",
+    "Lille": "里尔",
+    "Osasuna": "奥萨苏纳",
+    "Fulham": "富勒姆",
+    "Fenerbahce": "费内巴切",
+    "Elche": "埃尔切",
+    "Real Oviedo": "皇家奥维耶多",
+    "Valencia": "瓦伦西亚",
+    "Heidenheim": "海登海姆",
+    "Crystal Palace": "水晶宫",
+    "Atalanta": "亚特兰大",
+    "Minnesota United FC": "明尼苏达联",
+    "Hull City": "赫尔城",
+    "SC Freiburg": "弗赖堡",
+    "VfL Wolfsburg": "沃尔夫斯堡",
+    "Toulouse": "图卢兹",
+    "FC Cincinnati": "辛辛那提FC",
+    "St. Pauli": "圣保利",
+    "Leeds United": "利兹联",
+    "Napoli": "那不勒斯",
+    "Real Sociedad": "皇家社会",
+    "Paris FC": "巴黎FC",
+    "Hamburg SV": "汉堡",
+    "Inter Miami CF": "迈阿密国际",
+    "Lazio": "拉齐奥",
+    "Orlando City SC": "奥兰多城",
+    "Strasbourg": "斯特拉斯堡",
+    "AEK Athens": "雅典AEK",
+    "Alavés": "阿拉维斯",
+    "Málaga": "马拉加",
+    "AC Milan": "AC米兰",
+    "Internazionale": "国际米兰",
+    "Union Berlin": "柏林联合",
+    "Chicago Fire": "芝加哥火焰",
+    "FC Copenhagen": "哥本哈根",
+    "Ajax Amsterdam": "阿贾克斯",
+    "Chongqing Tongliang Long": "重庆铜梁龙",
+    "Seattle Sounders": "西雅图海湾人",
+    "PSV Eindhoven": "PSV埃因霍温",
+    "RB Leipzig": "RB莱比锡",
+    "Hoffenheim": "霍芬海姆",
+    "Real Valladolid": "巴拉多利德",
+    "Columbus Crew": "哥伦布机员",
+    "VfB Stuttgart": "斯图加特",
+    "Beijing Guoan": "北京国安",
+    "Empoli": "恩波利",
+    "Espanyol": "西班牙人",
+    "Nice": "尼斯",
+    "Ipswich Town": "伊普斯维奇",
+    "Las Palmas": "拉斯帕尔马斯",
+    "Vancouver Whitecaps": "温哥华白浪",
+    "Chongqing Tonglianglong": "重庆铜梁龙",
+    "Bayer Leverkusen": "勒沃库森",
+    "Palermo": "巴勒莫",
+    "Benfica": "本菲卡",
+    "Shanghai Port": "上海海港",
+    "Tottenham Hotspur": "热刺",
+    "Cagliari": "卡利亚里",
+    "Angers": "昂热",
+    "   foreach(var line in Map.Split('\\n')) { var pair=line.Trim().Split('": "'); if(pair.Length==2) Teams[pair[0]]=pair[1]; }",
+    "Sporting Kansas City": "堪萨斯城竞技",
+    "Sabah FK": "萨巴赫",
+    "Qingdao Hainiu": "青岛海牛",
+    "Pafos": "帕福斯",
+    "Real Betis": "皇家贝蒂斯",
+    "Red Bull New York": "纽约红牛",
+    "Paris Saint-Germain": "巴黎圣日耳曼",
+    "Parma": "帕尔马",
+    "Rennes": "雷恩",
+    "Arsenal": "阿森纳",
+    "LAFC": "洛杉矶FC",
+    "Sunderland": "桑德兰",
+    "Ajax": "阿贾克斯",
+    "Club Brugge": "布鲁日",
+    "Dinamo Zagreb": "萨格勒布迪纳摩",
+    "Zhejiang Professional": "浙江",
+    "Le Mans": "勒芒",
+    "FC Augsburg": "奥格斯堡",
+    "Sparta Prague": "布拉格斯巴达",
+    "Schalke 04": "沙尔克04",
+    "Borussia Mönchengladbach": "门兴格拉德巴赫",
+    "Leicester City": "莱斯特城",
+    "AS Roma": "罗马",
+    "Union St.-Gilloise": "圣吉罗斯联合",
+    "Deportivo": "拉科鲁尼亚",
+    "CF Montreal": "蒙特利尔",
+    "Philadelphia Union": "费城联合",
+    "AJ Auxerre": "欧塞尔",
+    "Monza": "蒙扎",
+    "Bologna": "博洛尼亚",
+    "Inter Milan": "国际米兰",
+    "Sturm Graz": "格拉茨风暴",
+    "Mainz": "美因茨",
+    "Shakhtar Donetsk": "顿涅茨克矿工",
+    "Celtic": "凯尔特人",
+    "Viking FK": "维京",
+    "Zhejiang Professional FC": "浙江",
+    "Girona": "赫罗纳",
+    "Metz": "梅斯",
+    "Olympiacos": "奥林匹亚科斯",
+    "Bodo/Glimt": "博德闪耀",
+    "Real Madrid": "皇家马德里",
+    "Stade Rennais": "雷恩",
+    "FC Cologne": "科隆",
+    "Newcastle United": "纽卡斯尔联",
+    "Liaoning Tieren": "辽宁铁人",
+    "Shanghai Shenhua FC": "上海申花",
+    "SC Paderborn 07": "帕德博恩",
+    "Deportivo La Coruña": "拉科鲁尼亚",
+    "Frosinone": "弗罗西诺内",
+    "Shanghai Shenhua": "上海申花",
+    "RB Salzburg": "萨尔茨堡红牛",
+    "Brighton & Hove Albion": "布莱顿",
+    "Brest": "布雷斯特",
+    "Liverpool": "利物浦",
+    "Burnley": "伯恩利",
+    "Atlético Madrid": "马德里竞技",
+    "Real Salt Lake": "皇家盐湖城",
+    "Fiorentina": "佛罗伦萨",
+    "San Diego FC": "圣迭戈FC",
+    "Wolverhampton Wanderers": "狼队",
+    "Eintracht Frankfurt": "法兰克福",
+    "Montpellier": "蒙彼利埃",
+    "Nashville SC": "纳什维尔SC",
+    "Freiburg": "弗赖堡",
+    "1. FC Köln": "科隆",
+    "Dalian Yingbo": "大连英博",
+    "Atlanta United FC": "亚特兰大联",
+    "Como": "科莫",
+    "Venezia": "威尼斯",
+    "Brentford": "布伦特福德",
+    "Cremonese": "克雷莫内塞",
+    "Austin FC": "奥斯汀FC",
+    "Nantes": "南特",
+    "Lyon": "里昂",
+    "Galatasaray": "加拉塔萨雷",
+    "LA Galaxy": "洛杉矶银河",
+    "Augsburg": "奥格斯堡",
+    "Barcelona": "巴塞罗那",
+    "Stade de Reims": "兰斯",
+    "Mallorca": "马略卡",
+    "1. FC Heidenheim 1846": "海登海姆",
+    "Chelsea": "切尔西",
+    "Henan FC": "河南",
+    "Hamburger SV": "汉堡",
+    "Red Star Belgrade": "贝尔格莱德红星",
+    "AFC Bournemouth": "伯恩茅斯",
+    "Lens": "朗斯",
+    "New York City FC": "纽约城",
+    "Mainz 05": "美因茨",
+    "Feyenoord": "费耶诺德",
+    "Henan": "河南",
+    "Le Havre AC": "勒阿弗尔",
+    "D.C. United": "华盛顿联",
+    "West Ham United": "西汉姆联",
+    "Pisa": "比萨",
+    "Manchester City": "曼城",
+    "Lecce": "莱切",
+    "Borussia Dortmund": "多特蒙德",
+    "1. FC Union Berlin": "柏林联合",
+    "St. Louis CITY SC": "圣路易斯城",
+    "New England Revolution": "新英格兰革命",
+    "Houston Dynamo FC": "休斯敦迪纳摩",
+    "SV Elversberg": "埃尔弗斯贝格",
+    "Southampton": "南安普顿",
+    "Bayer 04 Leverkusen": "勒沃库森",
+    "Slovan Bratislava": "布拉迪斯拉发",
+    "Athletic Club": "毕尔巴鄂竞技",
+    "CF Montréal": "蒙特利尔",
+    "St. Louis City": "圣路易斯城",
+    "Yunnan Yukun": "云南玉昆",
+    "Genoa": "热那亚",
+    "Deportivo Alavés": "阿拉维斯",
+    "Portland Timbers": "波特兰伐木工",
+    "Villarreal": "比利亚雷亚尔",
+    "Toronto FC": "多伦多FC",
+    "Torino": "都灵",
+    "Sporting CP": "葡萄牙体育",
+    "Manchester United": "曼联",
+    "Saint-Étienne": "圣埃蒂安",
+    "Tianjin Jinmen Tiger": "天津津门虎",
+    "Nottingham Forest": "诺丁汉森林",
+    "Chicago Fire FC": "芝加哥火焰",
+    "Kairat Almaty": "阿拉木图凯拉特",
+    "FC Dallas": "达拉斯FC",
+    "Shenzhen Peng City": "深圳新鹏城",
+    "Holstein Kiel": "荷尔斯泰因基尔",
+    "Marseille": "马赛",
+    "Hellas Verona": "维罗纳",
+    "FC Salzburg": "萨尔茨堡红牛",
+    "Auxerre": "欧塞尔",
+    "Roma": "罗马",
+    "Charlotte FC": "夏洛特FC",
+    "Almería": "阿尔梅里亚",
+    "Middlesbrough": "米德尔斯堡",
+    "Aston Villa": "阿斯顿维拉",
+    "Rangers": "格拉斯哥流浪者",
+    "VfL Bochum": "波鸿",
+    "Shenzhen Xinpengcheng": "深圳新鹏城",
+    "Shandong Taishan": "山东泰山",
+    "Los Angeles FC": "洛杉矶FC",
+    "Bodø/Glimt": "博德闪耀",
+    "Le Havre": "勒阿弗尔",
+    "Troyes": "特鲁瓦",
+    "Monaco": "摩纳哥",
+    "Sevilla": "塞维利亚",
+    "Fenerbahçe": "费内巴切",
+    "Leganés": "莱加内斯",
+    "AS Monaco": "摩纳哥",
+    "Inter Miami": "迈阿密国际"
+  },
+  "teams": [
+    {
+      "Id": "349",
+      "Name": "AFC Bournemouth",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/349.png"
+    },
+    {
+      "Id": "359",
+      "Name": "Arsenal",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png"
+    },
+    {
+      "Id": "362",
+      "Name": "Aston Villa",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/362.png"
+    },
+    {
+      "Id": "337",
+      "Name": "Brentford",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/337.png"
+    },
+    {
+      "Id": "331",
+      "Name": "Brighton & Hove Albion",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/331.png"
+    },
+    {
+      "Id": "363",
+      "Name": "Chelsea",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png"
+    },
+    {
+      "Id": "388",
+      "Name": "Coventry City",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/388.png"
+    },
+    {
+      "Id": "384",
+      "Name": "Crystal Palace",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/384.png"
+    },
+    {
+      "Id": "368",
+      "Name": "Everton",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/368.png"
+    },
+    {
+      "Id": "370",
+      "Name": "Fulham",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/370.png"
+    },
+    {
+      "Id": "306",
+      "Name": "Hull City",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/306.png"
+    },
+    {
+      "Id": "373",
+      "Name": "Ipswich Town",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/373.png"
+    },
+    {
+      "Id": "357",
+      "Name": "Leeds United",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/357.png"
+    },
+    {
+      "Id": "364",
+      "Name": "Liverpool",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png"
+    },
+    {
+      "Id": "382",
+      "Name": "Manchester City",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png"
+    },
+    {
+      "Id": "360",
+      "Name": "Manchester United",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/360.png"
+    },
+    {
+      "Id": "361",
+      "Name": "Newcastle United",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png"
+    },
+    {
+      "Id": "393",
+      "Name": "Nottingham Forest",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/393.png"
+    },
+    {
+      "Id": "366",
+      "Name": "Sunderland",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/366.png"
+    },
+    {
+      "Id": "367",
+      "Name": "Tottenham Hotspur",
+      "League": "eng.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png"
+    },
+    {
+      "Id": "96",
+      "Name": "Alavés",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/96.png"
+    },
+    {
+      "Id": "93",
+      "Name": "Athletic Club",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/93.png"
+    },
+    {
+      "Id": "1068",
+      "Name": "Atlético Madrid",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png"
+    },
+    {
+      "Id": "83",
+      "Name": "Barcelona",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png"
+    },
+    {
+      "Id": "85",
+      "Name": "Celta Vigo",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/85.png"
+    },
+    {
+      "Id": "90",
+      "Name": "Deportivo",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/90.png"
+    },
+    {
+      "Id": "3751",
+      "Name": "Elche",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3751.png"
+    },
+    {
+      "Id": "88",
+      "Name": "Espanyol",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/88.png"
+    },
+    {
+      "Id": "2922",
+      "Name": "Getafe",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2922.png"
+    },
+    {
+      "Id": "1538",
+      "Name": "Levante",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/1538.png"
+    },
+    {
+      "Id": "99",
+      "Name": "Málaga",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/99.png"
+    },
+    {
+      "Id": "97",
+      "Name": "Osasuna",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/97.png"
+    },
+    {
+      "Id": "87",
+      "Name": "Racing Santander",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/87.png"
+    },
+    {
+      "Id": "101",
+      "Name": "Rayo Vallecano",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/101.png"
+    },
+    {
+      "Id": "244",
+      "Name": "Real Betis",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/244.png"
+    },
+    {
+      "Id": "86",
+      "Name": "Real Madrid",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png"
+    },
+    {
+      "Id": "89",
+      "Name": "Real Sociedad",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/89.png"
+    },
+    {
+      "Id": "243",
+      "Name": "Sevilla",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/243.png"
+    },
+    {
+      "Id": "94",
+      "Name": "Valencia",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/94.png"
+    },
+    {
+      "Id": "102",
+      "Name": "Villarreal",
+      "League": "esp.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png"
+    },
+    {
+      "Id": "103",
+      "Name": "AC Milan",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/103.png"
+    },
+    {
+      "Id": "104",
+      "Name": "AS Roma",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/104.png"
+    },
+    {
+      "Id": "105",
+      "Name": "Atalanta",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/105.png"
+    },
+    {
+      "Id": "107",
+      "Name": "Bologna",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/107.png"
+    },
+    {
+      "Id": "2925",
+      "Name": "Cagliari",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2925.png"
+    },
+    {
+      "Id": "2572",
+      "Name": "Como",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2572.png"
+    },
+    {
+      "Id": "109",
+      "Name": "Fiorentina",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/109.png"
+    },
+    {
+      "Id": "4057",
+      "Name": "Frosinone",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/4057.png"
+    },
+    {
+      "Id": "3263",
+      "Name": "Genoa",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3263.png"
+    },
+    {
+      "Id": "110",
+      "Name": "Internazionale",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png"
+    },
+    {
+      "Id": "111",
+      "Name": "Juventus",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/111.png"
+    },
+    {
+      "Id": "112",
+      "Name": "Lazio",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/112.png"
+    },
+    {
+      "Id": "113",
+      "Name": "Lecce",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/113.png"
+    },
+    {
+      "Id": "4007",
+      "Name": "Monza",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/4007.png"
+    },
+    {
+      "Id": "114",
+      "Name": "Napoli",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png"
+    },
+    {
+      "Id": "115",
+      "Name": "Parma",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/115.png"
+    },
+    {
+      "Id": "3997",
+      "Name": "Sassuolo",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3997.png"
+    },
+    {
+      "Id": "239",
+      "Name": "Torino",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/239.png"
+    },
+    {
+      "Id": "118",
+      "Name": "Udinese",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/118.png"
+    },
+    {
+      "Id": "17530",
+      "Name": "Venezia",
+      "League": "ita.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/17530.png"
+    },
+    {
+      "Id": "598",
+      "Name": "1. FC Union Berlin",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/598.png"
+    },
+    {
+      "Id": "131",
+      "Name": "Bayer Leverkusen",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/131.png"
+    },
+    {
+      "Id": "132",
+      "Name": "Bayern Munich",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png"
+    },
+    {
+      "Id": "124",
+      "Name": "Borussia Dortmund",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png"
+    },
+    {
+      "Id": "268",
+      "Name": "Borussia Mönchengladbach",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/268.png"
+    },
+    {
+      "Id": "125",
+      "Name": "Eintracht Frankfurt",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/125.png"
+    },
+    {
+      "Id": "3841",
+      "Name": "FC Augsburg",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3841.png"
+    },
+    {
+      "Id": "122",
+      "Name": "FC Cologne",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/122.png"
+    },
+    {
+      "Id": "127",
+      "Name": "Hamburg SV",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/127.png"
+    },
+    {
+      "Id": "2950",
+      "Name": "Mainz",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2950.png"
+    },
+    {
+      "Id": "11420",
+      "Name": "RB Leipzig",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11420.png"
+    },
+    {
+      "Id": "126",
+      "Name": "SC Freiburg",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/126.png"
+    },
+    {
+      "Id": "3307",
+      "Name": "SC Paderborn 07",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3307.png"
+    },
+    {
+      "Id": "10388",
+      "Name": "SV Elversberg",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/10388.png"
+    },
+    {
+      "Id": "133",
+      "Name": "Schalke 04",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/133.png"
+    },
+    {
+      "Id": "7911",
+      "Name": "TSG Hoffenheim",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/7911.png"
+    },
+    {
+      "Id": "134",
+      "Name": "VfB Stuttgart",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/134.png"
+    },
+    {
+      "Id": "137",
+      "Name": "Werder Bremen",
+      "League": "ger.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/137.png"
+    },
+    {
+      "Id": "172",
+      "Name": "AJ Auxerre",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png"
+    },
+    {
+      "Id": "174",
+      "Name": "AS Monaco",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/174.png"
+    },
+    {
+      "Id": "7868",
+      "Name": "Angers",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/7868.png"
+    },
+    {
+      "Id": "6997",
+      "Name": "Brest",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/6997.png"
+    },
+    {
+      "Id": "3236",
+      "Name": "Le Havre AC",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/3236.png"
+    },
+    {
+      "Id": "2697",
+      "Name": "Le Mans",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2697.png"
+    },
+    {
+      "Id": "175",
+      "Name": "Lens",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png"
+    },
+    {
+      "Id": "166",
+      "Name": "Lille",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png"
+    },
+    {
+      "Id": "273",
+      "Name": "Lorient",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/273.png"
+    },
+    {
+      "Id": "167",
+      "Name": "Lyon",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/167.png"
+    },
+    {
+      "Id": "176",
+      "Name": "Marseille",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/176.png"
+    },
+    {
+      "Id": "2502",
+      "Name": "Nice",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2502.png"
+    },
+    {
+      "Id": "6851",
+      "Name": "Paris FC",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/6851.png"
+    },
+    {
+      "Id": "160",
+      "Name": "Paris Saint-Germain",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png"
+    },
+    {
+      "Id": "169",
+      "Name": "Stade Rennais",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/169.png"
+    },
+    {
+      "Id": "180",
+      "Name": "Strasbourg",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/180.png"
+    },
+    {
+      "Id": "179",
+      "Name": "Toulouse",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/179.png"
+    },
+    {
+      "Id": "170",
+      "Name": "Troyes",
+      "League": "fra.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/170.png"
+    },
+    {
+      "Id": "887",
+      "Name": "AEK Athens",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/887.png"
+    },
+    {
+      "Id": "104",
+      "Name": "AS Roma",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/104.png"
+    },
+    {
+      "Id": "359",
+      "Name": "Arsenal",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png"
+    },
+    {
+      "Id": "362",
+      "Name": "Aston Villa",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/362.png"
+    },
+    {
+      "Id": "1068",
+      "Name": "Atlético Madrid",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/1068.png"
+    },
+    {
+      "Id": "83",
+      "Name": "Barcelona",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png"
+    },
+    {
+      "Id": "132",
+      "Name": "Bayern Munich",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/132.png"
+    },
+    {
+      "Id": "2980",
+      "Name": "Bodo/Glimt",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2980.png"
+    },
+    {
+      "Id": "124",
+      "Name": "Borussia Dortmund",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/124.png"
+    },
+    {
+      "Id": "570",
+      "Name": "Club Brugge",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/570.png"
+    },
+    {
+      "Id": "2572",
+      "Name": "Como",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2572.png"
+    },
+    {
+      "Id": "437",
+      "Name": "FC Porto",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/437.png"
+    },
+    {
+      "Id": "436",
+      "Name": "Fenerbahce",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/436.png"
+    },
+    {
+      "Id": "142",
+      "Name": "Feyenoord Rotterdam",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/142.png"
+    },
+    {
+      "Id": "432",
+      "Name": "Galatasaray",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/432.png"
+    },
+    {
+      "Id": "110",
+      "Name": "Internazionale",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/110.png"
+    },
+    {
+      "Id": "4411",
+      "Name": "LASK Linz",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/4411.png"
+    },
+    {
+      "Id": "175",
+      "Name": "Lens",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/175.png"
+    },
+    {
+      "Id": "166",
+      "Name": "Lille",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/166.png"
+    },
+    {
+      "Id": "364",
+      "Name": "Liverpool",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png"
+    },
+    {
+      "Id": "382",
+      "Name": "Manchester City",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png"
+    },
+    {
+      "Id": "360",
+      "Name": "Manchester United",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/360.png"
+    },
+    {
+      "Id": "114",
+      "Name": "Napoli",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/114.png"
+    },
+    {
+      "Id": "148",
+      "Name": "PSV Eindhoven",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/148.png"
+    },
+    {
+      "Id": "160",
+      "Name": "Paris Saint-Germain",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png"
+    },
+    {
+      "Id": "11420",
+      "Name": "RB Leipzig",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/11420.png"
+    },
+    {
+      "Id": "244",
+      "Name": "Real Betis",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/244.png"
+    },
+    {
+      "Id": "86",
+      "Name": "Real Madrid",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png"
+    },
+    {
+      "Id": "21922",
+      "Name": "Sabah FK",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21922.png"
+    },
+    {
+      "Id": "493",
+      "Name": "Shakhtar Donetsk",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/493.png"
+    },
+    {
+      "Id": "494",
+      "Name": "Slavia Prague",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/494.png"
+    },
+    {
+      "Id": "521",
+      "Name": "Slovan Bratislava",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/521.png"
+    },
+    {
+      "Id": "2250",
+      "Name": "Sporting CP",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2250.png"
+    },
+    {
+      "Id": "134",
+      "Name": "VfB Stuttgart",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/134.png"
+    },
+    {
+      "Id": "510",
+      "Name": "Viking FK",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/510.png"
+    },
+    {
+      "Id": "102",
+      "Name": "Villarreal",
+      "League": "uefa.champions",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/102.png"
+    },
+    {
+      "Id": "18418",
+      "Name": "Atlanta United FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18418.png"
+    },
+    {
+      "Id": "20906",
+      "Name": "Austin FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/20906.png"
+    },
+    {
+      "Id": "9720",
+      "Name": "CF Montréal",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/9720.png"
+    },
+    {
+      "Id": "21300",
+      "Name": "Charlotte FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21300.png"
+    },
+    {
+      "Id": "182",
+      "Name": "Chicago Fire FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/182.png"
+    },
+    {
+      "Id": "184",
+      "Name": "Colorado Rapids",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/184.png"
+    },
+    {
+      "Id": "183",
+      "Name": "Columbus Crew",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/183.png"
+    },
+    {
+      "Id": "193",
+      "Name": "D.C. United",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/193.png"
+    },
+    {
+      "Id": "18267",
+      "Name": "FC Cincinnati",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18267.png"
+    },
+    {
+      "Id": "185",
+      "Name": "FC Dallas",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/185.png"
+    },
+    {
+      "Id": "6077",
+      "Name": "Houston Dynamo FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/6077.png"
+    },
+    {
+      "Id": "20232",
+      "Name": "Inter Miami CF",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/20232.png"
+    },
+    {
+      "Id": "187",
+      "Name": "LA Galaxy",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/187.png"
+    },
+    {
+      "Id": "18966",
+      "Name": "LAFC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18966.png"
+    },
+    {
+      "Id": "17362",
+      "Name": "Minnesota United FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/17362.png"
+    },
+    {
+      "Id": "18986",
+      "Name": "Nashville SC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18986.png"
+    },
+    {
+      "Id": "189",
+      "Name": "New England Revolution",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/189.png"
+    },
+    {
+      "Id": "17606",
+      "Name": "New York City FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/17606.png"
+    },
+    {
+      "Id": "12011",
+      "Name": "Orlando City SC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/12011.png"
+    },
+    {
+      "Id": "10739",
+      "Name": "Philadelphia Union",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/10739.png"
+    },
+    {
+      "Id": "9723",
+      "Name": "Portland Timbers",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/9723.png"
+    },
+    {
+      "Id": "4771",
+      "Name": "Real Salt Lake",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/4771.png"
+    },
+    {
+      "Id": "190",
+      "Name": "Red Bull New York",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/190.png"
+    },
+    {
+      "Id": "22529",
+      "Name": "San Diego FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/22529.png"
+    },
+    {
+      "Id": "191",
+      "Name": "San Jose Earthquakes",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/191.png"
+    },
+    {
+      "Id": "9726",
+      "Name": "Seattle Sounders FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/9726.png"
+    },
+    {
+      "Id": "186",
+      "Name": "Sporting Kansas City",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/186.png"
+    },
+    {
+      "Id": "21812",
+      "Name": "St. Louis CITY SC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21812.png"
+    },
+    {
+      "Id": "7318",
+      "Name": "Toronto FC",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/7318.png"
+    },
+    {
+      "Id": "9727",
+      "Name": "Vancouver Whitecaps",
+      "League": "usa.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/9727.png"
+    },
+    {
+      "Id": "2052",
+      "Name": "Beijing Guoan",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2052.png"
+    },
+    {
+      "Id": "21355",
+      "Name": "Chengdu Rongcheng",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21355.png"
+    },
+    {
+      "Id": "131704",
+      "Name": "Chongqing Tonglianglong",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/131704.png"
+    },
+    {
+      "Id": "22537",
+      "Name": "Dalian Yingbo",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/22537.png"
+    },
+    {
+      "Id": "8240",
+      "Name": "Henan",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/8240.png"
+    },
+    {
+      "Id": "131705",
+      "Name": "Liaoning Tieren",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/131705.png"
+    },
+    {
+      "Id": "21910",
+      "Name": "Qingdao Hainiu",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21910.png"
+    },
+    {
+      "Id": "22198",
+      "Name": "Qingdao West Coast",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/22198.png"
+    },
+    {
+      "Id": "7521",
+      "Name": "Shandong Taishan",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/7521.png"
+    },
+    {
+      "Id": "15515",
+      "Name": "Shanghai Port FC",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/15515.png"
+    },
+    {
+      "Id": "977",
+      "Name": "Shanghai Shenhua FC",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/977.png"
+    },
+    {
+      "Id": "22199",
+      "Name": "Shenzhen Xinpengcheng",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/22199.png"
+    },
+    {
+      "Id": "8239",
+      "Name": "Tianjin Jinmen Tiger",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/8239.png"
+    },
+    {
+      "Id": "21506",
+      "Name": "Wuhan Three Towns",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/21506.png"
+    },
+    {
+      "Id": "22536",
+      "Name": "Yunnan Yukun",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/22536.png"
+    },
+    {
+      "Id": "18203",
+      "Name": "Zhejiang Professional FC",
+      "League": "chn.1",
+      "Logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18203.png"
+    }
+  ]
+}
