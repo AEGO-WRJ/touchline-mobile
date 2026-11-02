@@ -10,7 +10,9 @@ android {
             if (System.getenv('SIGNING_STORE')) {
                 storeFile file(System.getenv('SIGNING_STORE'))
                 storePassword System.getenv('SIGNING_PASSWORD')
-                keyAlias 'touchline'
+                def store = java.security.KeyStore.getInstance('PKCS12')
+                file(System.getenv('SIGNING_STORE')).withInputStream { store.load(it, System.getenv('SIGNING_PASSWORD').toCharArray()) }
+                keyAlias store.aliases().nextElement()
                 keyPassword System.getenv('SIGNING_PASSWORD')
             }
         }
