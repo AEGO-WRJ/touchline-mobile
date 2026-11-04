@@ -84,7 +84,7 @@ public final class MainActivity extends Activity {
             InputStream stream=c.getInputStream();if("gzip".equalsIgnoreCase(c.getContentEncoding()))stream=new GZIPInputStream(stream);
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();
             try(InputStream input=stream){byte[] buffer=new byte[8192];int n;while((n=input.read(buffer))!=-1){if(!active||bytes.size()+n>16000000)return error(503);bytes.write(buffer,0,n);}}
-            return new WebResourceResponse("application/json","UTF-8",new ByteArrayInputStream(bytes.toByteArray()));
+            return new WebResourceResponse("application/json","UTF-8",200,"OK",Collections.singletonMap("Cache-Control","no-store"),new ByteArrayInputStream(bytes.toByteArray()));
         } finally {if(c!=null){connections.remove(c);c.disconnect();}slots.release();}
     }
     private WebResourceResponse error(int status) {return new WebResourceResponse("application/json","UTF-8",status,"Unavailable",Collections.emptyMap(),new ByteArrayInputStream("{}".getBytes(java.nio.charset.StandardCharsets.UTF_8)));}
