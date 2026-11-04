@@ -18,6 +18,7 @@ public final class MainActivity extends Activity {
     private static final String ORIGIN = "https://app.touchline.local";
     private WebView web;
     private volatile boolean active;
+    private boolean pageReady;
     private final Set<HttpURLConnection> connections = ConcurrentHashMap.newKeySet();
     private final Semaphore slots = new Semaphore(4);
 
@@ -36,6 +37,14 @@ public final class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.addJavascriptInterface(new Object() {
+            @JavascriptInterface public void subscriptions(String value) {
+                try {JSONObject p=new JSONObject(value);MatchAlerts.configure(MainActivity.this,p);runOnUiThread(()->{if(p.optBoolean("enabled")&&p.optBoolean("prompt")&&android.os.Build.VERSION.SDK_INT>=33&&checkSelfPermission("android.permission.POST_NOTIFICATIONS")!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"},4101);else if(p.optBoolean("enabled")&&p.optBoolean("prompt")&&!MatchAlerts.permitted(MainActivity.this))startActivity(new android.content.Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(android.provider.Settings.EXTRA_APP_PACKAGE,getPackageName()));notifyPermission();});}catch(Exception ignored){}
+            }
+            @JavascriptInterface public void ready(String value){runOnUiThread(()->{pageReady=true;deliverMatch();notifyPermission();});}
+            @JavascriptInterface public void notificationStatus(String value) {runOnUiThread(()->notifyPermission());}
+            @JavascriptInterface public void openArticle(String value) {
+                try {Uri uri=Uri.parse(new JSONObject(value).getString("url"));String host=uri.getHost();if(!"https".equals(uri.getScheme())||host==null||!(host.equals("espn.com")||host.endsWith(".espn.com"))||uri.getUserInfo()!=null)return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,uri));}catch(Exception ignored){}});}catch(Exception ignored){}
+            }
             @JavascriptInterface public void appearance(String value) {
                 try {JSONObject p=new JSONObject(value);boolean dark=p.optBoolean("dark",true);int color=Color.parseColor(p.getString("background"));runOnUiThread(()->{if(web==null)return;web.setBackgroundColor(color);getWindow().setStatusBarColor(color);getWindow().setNavigationBarColor(color);getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);});}catch(Exception ignored){}
             }
@@ -50,6 +59,7 @@ public final class MainActivity extends Activity {
             }
         }, "Touchline");
         web.setWebViewClient(new WebViewClient() {
+            @Override public void onPageFinished(WebView view,String url){notifyPermission();}
             @Override public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest r) { return !r.getUrl().toString().startsWith(ORIGIN+"/"); }
             @Override public WebResourceResponse shouldInterceptRequest(WebView view,WebResourceRequest r) {
                 Uri uri=r.getUrl();
@@ -58,10 +68,10 @@ public final class MainActivity extends Activity {
                     if("/api".equals(uri.getPath())) return api(uri.getQueryParameter("url"));
                     String path=uri.getPath().substring(1);
                     if(path.isEmpty())path="index.html";
-                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","cache-policy.mjs","cache-store.mjs","catalog.json").contains(path))return error(404);
+                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","cache-policy.mjs","cache-store.mjs","info-model.mjs","info.mjs","catalog.json").contains(path))return error(404);
                     String mime=path.endsWith(".mjs")?"text/javascript":path.endsWith(".css")?"text/css":path.endsWith(".json")?"application/json":"text/html";
                     Map<String,String> headers=new HashMap<>();
-                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src https://a.espncdn.com; connect-src 'self'; object-src 'none'; base-uri 'none'");
+                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src https://a.espncdn.com https://images.fotmob.com; connect-src 'self'; object-src 'none'; base-uri 'none'");
                     return new WebResourceResponse(mime,"UTF-8",200,"OK",headers,getAssets().open(path));
                 } catch(Exception e) { return error(503); }
             }
@@ -79,7 +89,7 @@ public final class MainActivity extends Activity {
             if(!active)return error(503);
             c=(HttpURLConnection)url.openConnection();connections.add(c);
             c.setConnectTimeout(12000);c.setReadTimeout(18000);c.setInstanceFollowRedirects(false);
-            c.setRequestProperty("User-Agent","TouchlineMobile/1.0");c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Encoding","gzip");
+            c.setRequestProperty("User-Agent","TouchlineMobile/1.3");c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Encoding","gzip");
             if(c.getResponseCode()!=200)return error(503);
             InputStream stream=c.getInputStream();if("gzip".equalsIgnoreCase(c.getContentEncoding()))stream=new GZIPInputStream(stream);
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();
@@ -101,7 +111,11 @@ public final class MainActivity extends Activity {
             saved.edit().putString("alias",alias).apply();
         }catch(Exception e){Toast.makeText(this,"此球队图标暂不可用",Toast.LENGTH_LONG).show();}
     }
-    @Override protected void onResume(){super.onResume();active=true;if(web!=null){web.onResume();web.evaluateJavascript("window.lifecycle&&window.lifecycle(true)",null);}}
+    private void notifyPermission(){if(web!=null&&pageReady)web.evaluateJavascript("window.notificationState&&window.notificationState("+MatchAlerts.permitted(this)+")",null);}
+    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){super.onRequestPermissionsResult(request,permissions,results);notifyPermission();}
+    @Override protected void onNewIntent(android.content.Intent intent){super.onNewIntent(intent);setIntent(intent);deliverMatch();}
+    private void deliverMatch(){if(web==null||!pageReady)return;String id=getIntent().getStringExtra("matchId"),league=getIntent().getStringExtra("league");if(id==null||league==null||!id.matches("[0-9]{1,12}")||!league.matches("[a-z0-9._]{1,40}"))return;getIntent().removeExtra("matchId");getIntent().removeExtra("league");web.evaluateJavascript("window.openNotifiedMatch&&window.openNotifiedMatch("+JSONObject.quote(id)+","+JSONObject.quote(league)+")",null);}
+    @Override protected void onResume(){super.onResume();active=true;notifyPermission();if(web!=null){web.onResume();web.evaluateJavascript("window.lifecycle&&window.lifecycle(true)",null);}}
     @Override protected void onPause(){active=false;if(web!=null){web.evaluateJavascript("window.lifecycle&&window.lifecycle(false)",null);web.onPause();}for(HttpURLConnection c:connections)c.disconnect();super.onPause();}
     @Override public void onBackPressed(){web.evaluateJavascript("window.goBack?window.goBack():false",handled->{if(!"true".equals(handled))finish();});}
     @Override protected void onDestroy(){for(HttpURLConnection c:connections)c.disconnect();if(web!=null){web.removeJavascriptInterface("Touchline");web.destroy();web=null;}super.onDestroy();}
