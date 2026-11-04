@@ -36,6 +36,15 @@ public final class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.addJavascriptInterface(new Object() {
+            @JavascriptInterface public void appearance(String value) {
+                try {JSONObject p=new JSONObject(value);boolean dark=p.optBoolean("dark",true);int color=Color.parseColor(p.getString("background"));runOnUiThread(()->{if(web==null)return;web.setBackgroundColor(color);getWindow().setStatusBarColor(color);getWindow().setNavigationBarColor(color);getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);});}catch(Exception ignored){}
+            }
+            @JavascriptInterface public void openUpdate(String value) {
+                try {String url=new JSONObject(value).getString("url");if(!url.matches("https://github\\.com/AEGO-WRJ/touchline-mobile/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/Touchline-Android-v[0-9]+\\.[0-9]+\\.[0-9]+\\.apk"))return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,Uri.parse(url)));}catch(Exception e){Toast.makeText(MainActivity.this,"未找到浏览器，请从仓库下载更新",Toast.LENGTH_LONG).show();}});}catch(Exception ignored){}
+            }
+            @JavascriptInterface public void setTeamIcon(String value) {
+                try {String id=new JSONObject(value).optString("id");if(!id.isEmpty()&&!id.matches("[0-9]+"))return;runOnUiThread(()->switchIcon(id));}catch(Exception ignored){}
+            }
             @JavascriptInterface public void announce(String value) {
                 try { String text = new JSONObject(value).optString("text"); runOnUiThread(()->{ if(active) Toast.makeText(MainActivity.this,text,Toast.LENGTH_LONG).show(); }); } catch(Exception ignored) {}
             }
@@ -49,7 +58,7 @@ public final class MainActivity extends Activity {
                     if("/api".equals(uri.getPath())) return api(uri.getQueryParameter("url"));
                     String path=uri.getPath().substring(1);
                     if(path.isEmpty())path="index.html";
-                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","catalog.json").contains(path))return error(404);
+                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","catalog.json").contains(path))return error(404);
                     String mime=path.endsWith(".mjs")?"text/javascript":path.endsWith(".css")?"text/css":path.endsWith(".json")?"application/json":"text/html";
                     Map<String,String> headers=new HashMap<>();
                     headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src https://a.espncdn.com; connect-src 'self'; object-src 'none'; base-uri 'none'");
@@ -62,7 +71,8 @@ public final class MainActivity extends Activity {
     private WebResourceResponse api(String address) throws Exception {
         if(!active||address==null)return error(503);
         URL url=new URL(address);
-        if(!"https".equals(url.getProtocol())||!Arrays.asList("site.api.espn.com","www.fotmob.com","data.fotmob.com").contains(url.getHost())||url.getUserInfo()!=null)return error(403);
+        boolean update=url.getHost().equals("api.github.com")&&url.getPath().equals("/repos/AEGO-WRJ/touchline-mobile/releases/latest");
+        if(!"https".equals(url.getProtocol())||(!update&&!Arrays.asList("site.api.espn.com","www.fotmob.com","data.fotmob.com").contains(url.getHost()))||url.getUserInfo()!=null)return error(403);
         if(!slots.tryAcquire(18,TimeUnit.SECONDS))return error(503);
         HttpURLConnection c=null;
         try {
@@ -78,6 +88,19 @@ public final class MainActivity extends Activity {
         } finally {if(c!=null){connections.remove(c);c.disconnect();}slots.release();}
     }
     private WebResourceResponse error(int status) {return new WebResourceResponse("application/json","UTF-8",status,"Unavailable",Collections.emptyMap(),new ByteArrayInputStream("{}".getBytes(java.nio.charset.StandardCharsets.UTF_8)));}
+    private void switchIcon(String id) {
+        String alias=getPackageName()+"."+(id.isEmpty()?"DefaultIcon":"Team"+id);
+        android.content.SharedPreferences saved=getSharedPreferences("launcher",MODE_PRIVATE);
+        String previous=saved.getString("alias",getPackageName()+".DefaultIcon");if(alias.equals(previous))return;
+        android.content.pm.PackageManager pm=getPackageManager();
+        try {
+            android.content.ComponentName next=new android.content.ComponentName(this,alias);
+            pm.getActivityInfo(next,android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS);
+            pm.setComponentEnabledSetting(next,android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED,android.content.pm.PackageManager.DONT_KILL_APP);
+            pm.setComponentEnabledSetting(new android.content.ComponentName(this,previous),android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED,android.content.pm.PackageManager.DONT_KILL_APP);
+            saved.edit().putString("alias",alias).apply();
+        }catch(Exception e){Toast.makeText(this,"此球队图标暂不可用",Toast.LENGTH_LONG).show();}
+    }
     @Override protected void onResume(){super.onResume();active=true;if(web!=null){web.onResume();web.evaluateJavascript("window.lifecycle&&window.lifecycle(true)",null);}}
     @Override protected void onPause(){active=false;if(web!=null){web.evaluateJavascript("window.lifecycle&&window.lifecycle(false)",null);web.onPause();}for(HttpURLConnection c:connections)c.disconnect();super.onPause();}
     @Override public void onBackPressed(){web.evaluateJavascript("window.goBack?window.goBack():false",handled->{if(!"true".equals(handled))finish();});}

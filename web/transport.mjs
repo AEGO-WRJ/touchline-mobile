@@ -1,4 +1,4 @@
-const allowed=['site.api.espn.com','www.fotmob.com','data.fotmob.com'];
+const allowed=['site.api.espn.com','www.fotmob.com','data.fotmob.com','api.github.com'];
 export async function request(url,signal){const u=new URL(url);if(u.protocol!=='https:'||!allowed.includes(u.hostname))throw Error('无效的数据地址');const timeout=AbortSignal.timeout(18000);const combined=signal?AbortSignal.any([signal,timeout]):timeout;const response=await fetch('/api?url='+encodeURIComponent(url),{signal:combined});if(!response.ok)throw Error('数据连接失败 '+response.status);return response.json();}
 const memory=new Map();
 export async function cached(url,ttl,signal,force=false){const item=memory.get(url);if(!force&&item&&Date.now()-item.time<ttl)return {...item,stale:false};try{const value=await request(url,signal),saved={value,time:Date.now()};memory.set(url,saved);return {...saved,stale:false};}catch(e){if(signal?.aborted)throw e;if(item)return {...item,stale:true};throw e;}}

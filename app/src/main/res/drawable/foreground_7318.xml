@@ -1,0 +1,1 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item android:drawable="@drawable/field"/><item android:width="34dp" android:height="34dp" android:gravity="center" android:drawable="@drawable/team_7318"/></layer-list>
