@@ -1,5 +1,14 @@
+import {restore,persist,clearStore} from './cache-store.mjs';
+import {scheduleTTL,fresh,allFinal} from './cache-policy.mjs';
 const allowed=['site.api.espn.com','www.fotmob.com','data.fotmob.com','api.github.com'];
 export async function request(url,signal){const u=new URL(url);if(u.protocol!=='https:'||!allowed.includes(u.hostname))throw Error('无效的数据地址');const timeout=AbortSignal.timeout(18000);const combined=signal?AbortSignal.any([signal,timeout]):timeout;const response=await fetch('/api?url='+encodeURIComponent(url),{signal:combined});if(!response.ok)throw Error('数据连接失败 '+response.status);return response.json();}
-const memory=new Map();
-export async function cached(url,ttl,signal,force=false){const item=memory.get(url);if(!force&&item&&Date.now()-item.time<ttl)return {...item,stale:false};try{const value=await request(url,signal),saved={value,time:Date.now()};memory.set(url,saved);return {...saved,stale:false};}catch(e){if(signal?.aborted)throw e;if(item)return {...item,stale:true};throw e;}}
+const memory=new Map();let generation=0;
+function retention(item){if(item.url.includes('/scoreboard?')){if(item.value.events?.some(e=>(e.competitions?.[0]?.status||e.status)?.type?.state==='in'))return 21600000;return 14*86400000;}if(item.url.includes('/summary?')||item.url.includes('/matchDetails?'))return 7200000;return 43200000;}
+const sizes=new WeakMap();function bytes(item){if(!sizes.has(item))sizes.set(item,new TextEncoder().encode(JSON.stringify(item)).length);return sizes.get(item);}
+function prune(){const now=Date.now(),removed=[];let size=0,count=0;for(const [url,item] of [...memory].sort((a,b)=>b[1].time-a[1].time)){const n=bytes(item);if(now-item.time<0||now-item.time>retention(item)||size+n>16*1024*1024||count>=200){removed.push(url);}else{size+=n;count++;}}for(const url of removed)memory.delete(url);if(removed.length)persist([],removed);return size;}
+for(const item of await restore())memory.set(item.url,item);prune();
+export function peek(url){const item=memory.get(url);if(item&&(Date.now()-item.time<0||Date.now()-item.time>retention(item))){memory.delete(url);persist([],[url]);return null;}return item;}
+export function cacheSize(){return prune();}
+export async function clearCache(){generation++;await clearStore();memory.clear();}
+export async function cached(url,ttl,signal,force=false){const item=peek(url),policy=url.includes('/scoreboard?')?scheduleTTL(item,url):ttl;if(!force&&fresh(item,policy))return {...item,stale:false};const epoch=generation;try{const value=await request(url,signal);if(signal?.aborted||epoch!==generation)throw new DOMException('已取消','AbortError');if(url.includes('/scoreboard?')&&!Array.isArray(value.events))throw Error('赛程暂不可用');const now=Date.now(),saved={url,value,time:now,finalSince:allFinal(value)?item?.finalSince||now:null};memory.set(url,saved);prune();if(memory.has(url))persist([saved]);return {...saved,stale:false};}catch(e){if(signal?.aborted||epoch!==generation)throw e;if(item)return {...item,stale:true};throw e;}}
 export const native=(name,value)=>{if(window.Touchline?.[name])window.Touchline[name](JSON.stringify(value));else if(window.webkit?.messageHandlers?.touchline)window.webkit.messageHandlers.touchline.postMessage({name,value});};

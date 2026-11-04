@@ -1,0 +1,5 @@
+// Only feed data lives here. Preferences are kept separately in localStorage.
+let db;
+export async function restore(){try{return await new Promise(resolve=>{const request=indexedDB.open('touchline-feed',1);request.onupgradeneeded=()=>request.result.createObjectStore('entries',{keyPath:'url'});request.onerror=()=>resolve([]);request.onblocked=()=>resolve([]);request.onsuccess=()=>{db=request.result;db.onversionchange=()=>db.close();const tx=db.transaction('entries'),q=tx.objectStore('entries').getAll();q.onsuccess=()=>resolve(q.result.filter(x=>x.value&&Number.isFinite(x.time)));q.onerror=()=>resolve([]);};});}catch{return [];}}
+export function persist(entries,removed=[]){if(!db)return;try{const tx=db.transaction('entries','readwrite'),store=tx.objectStore('entries');for(const entry of entries)store.put(entry);for(const url of removed)store.delete(url);tx.onabort=()=>{};tx.onerror=()=>{};}catch{}}
+export async function clearStore(){if(!db)return;await new Promise((resolve,reject)=>{const tx=db.transaction("entries","readwrite");tx.objectStore("entries").clear();tx.oncomplete=resolve;tx.onerror=()=>reject(Error("清理失败"));tx.onabort=()=>reject(Error("清理失败"));});}
