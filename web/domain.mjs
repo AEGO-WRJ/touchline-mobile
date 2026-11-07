@@ -1,6 +1,11 @@
 export const leagues=[['eng.1','英超','47'],['esp.1','西甲','87'],['ita.1','意甲','55'],['ger.1','德甲','54'],['fra.1','法甲','53'],['uefa.champions','欧冠','42'],['usa.1','美职联','130'],['chn.1','中超','120'],['eng.fa','英足总杯','132'],['eng.league_cup','英联赛杯','133'],['ger.dfb_pokal','德国杯','209'],['esp.copa_del_rey','国王杯','138']];
 export const dayKey=value=>new Date(new Date(value).getTime()+28800000).toISOString().slice(0,10);
 export const shiftDay=(day,n)=>new Date(Date.parse(day+'T00:00:00Z')+n*86400000).toISOString().slice(0,10);
+export function inScheduleWindow(match,date,now=Date.now()){
+ const day=dayKey(match.time);if(day>=date&&day<=shiftDay(date,6))return true;
+ if(date!==dayKey(now))return false;
+ return (match.state==='post'&&day>=shiftDay(date,-2)&&day<date)||(match.state==='in'&&day>=shiftDay(date,-2)&&day<date);
+}
 export function move(ids,id,offset){const result=[...ids],i=result.indexOf(id),j=i+Math.sign(offset);if(i>=0&&j>=0&&j<result.length){result.splice(i,1);result.splice(j,0,id);}return result;}
 export function select(matches,p={}){return [...new Map(matches.filter(m=>(!p.league||p.league==='all'||p.league===m.league)&&(!p.live||m.state==='in')&&(!p.onlyFavorites||[m.home.id,m.away.id].some(id=>p.favorites.includes(id)))).map(m=>[m.id,m])).values()].sort((a,b)=>a.time-b.time||a.id.localeCompare(b.id));}
 export function schedule(root,league){
