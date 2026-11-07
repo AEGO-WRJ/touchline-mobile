@@ -2,6 +2,12 @@ package com.touchline.mobile;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
+import android.graphics.Insets;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.view.DisplayCutout;
+import android.widget.FrameLayout;
 import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
@@ -17,6 +23,7 @@ import org.json.JSONObject;
 public final class MainActivity extends Activity {
     private static final String ORIGIN = "https://app.touchline.local";
     private WebView web;
+    private FrameLayout content;
     private volatile boolean active;
     private boolean pageReady;
     private final Set<HttpURLConnection> connections = ConcurrentHashMap.newKeySet();
@@ -28,8 +35,33 @@ public final class MainActivity extends Activity {
         getWindow().setNavigationBarColor(Color.rgb(20,39,46));
         web = new WebView(this);
         web.setBackgroundColor(Color.rgb(21,40,45));
-        web.setOnApplyWindowInsetsListener((v,insets)-> { v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom()); return insets.consumeSystemWindowInsets(); });
-        setContentView(web);
+        content = new FrameLayout(this);
+        content.setBackgroundColor(Color.rgb(21,40,45));
+        content.addView(web, new FrameLayout.LayoutParams(-1, -1));
+        if (Build.VERSION.SDK_INT >= 30) getWindow().setDecorFitsSystemWindows(false);
+        // Resize the WebView itself: its HTML dialogs and fixed navigation share this safe viewport.
+        content.setOnApplyWindowInsetsListener((view, insets) -> {
+            if (Build.VERSION.SDK_INT >= 30) {
+                int bars = WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout();
+                int handled = bars | WindowInsets.Type.ime();
+                Insets safe = insets.getInsets(handled);
+                view.setPadding(safe.left, safe.top, safe.right, safe.bottom);
+                // Deliver zeroed insets so WebView does not add the same spacing a second time.
+                return new WindowInsets.Builder(insets).setInsets(handled, Insets.NONE)
+                    .setInsetsIgnoringVisibility(bars, Insets.NONE).setDisplayCutout(null).build();
+            }
+            int left = insets.getSystemWindowInsetLeft(), top = insets.getSystemWindowInsetTop();
+            int right = insets.getSystemWindowInsetRight(), bottom = insets.getSystemWindowInsetBottom();
+            DisplayCutout cutout = insets.getDisplayCutout();
+            if (cutout != null) {
+                left = Math.max(left, cutout.getSafeInsetLeft()); top = Math.max(top, cutout.getSafeInsetTop());
+                right = Math.max(right, cutout.getSafeInsetRight()); bottom = Math.max(bottom, cutout.getSafeInsetBottom());
+            }
+            view.setPadding(left, top, right, bottom);
+            return insets.consumeSystemWindowInsets().consumeStableInsets().consumeDisplayCutout();
+        });
+        setContentView(content);
+        content.requestApplyInsets();
         WebSettings settings = web.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -46,7 +78,7 @@ public final class MainActivity extends Activity {
                 try {Uri uri=Uri.parse(new JSONObject(value).getString("url"));String host=uri.getHost();if(!"https".equals(uri.getScheme())||host==null||!(host.equals("espn.com")||host.endsWith(".espn.com")||(host.equals("www.dongqiudi.com")&&uri.getPath().matches("/article/[0-9]+")))||uri.getUserInfo()!=null)return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,uri));}catch(Exception ignored){}});}catch(Exception ignored){}
             }
             @JavascriptInterface public void appearance(String value) {
-                try {JSONObject p=new JSONObject(value);boolean dark=p.optBoolean("dark",true);int color=Color.parseColor(p.getString("background"));runOnUiThread(()->{if(web==null)return;web.setBackgroundColor(color);getWindow().setStatusBarColor(color);getWindow().setNavigationBarColor(color);getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);});}catch(Exception ignored){}
+                try {JSONObject p=new JSONObject(value);boolean dark=p.optBoolean("dark",true);int color=Color.parseColor(p.getString("background"));runOnUiThread(()->{if(web==null)return;web.setBackgroundColor(color);content.setBackgroundColor(color);getWindow().setStatusBarColor(color);getWindow().setNavigationBarColor(color);setSystemBarAppearance(dark);});}catch(Exception ignored){}
             }
             @JavascriptInterface public void openUpdate(String value) {
                 try {String url=new JSONObject(value).getString("url");if(!url.matches("https://github\\.com/AEGO-WRJ/touchline-mobile/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+/Touchline-Android-v[0-9]+\\.[0-9]+\\.[0-9]+\\.apk"))return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,Uri.parse(url)));}catch(Exception e){Toast.makeText(MainActivity.this,"未找到浏览器，请从仓库下载更新",Toast.LENGTH_LONG).show();}});}catch(Exception ignored){}
@@ -77,6 +109,17 @@ public final class MainActivity extends Activity {
             }
         });
         web.loadUrl(ORIGIN+"/index.html");
+    }
+    private void setSystemBarAppearance(boolean dark) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            WindowInsetsController controller = getWindow().getInsetsController();
+            int light = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+            if (controller != null) controller.setSystemBarsAppearance(dark ? 0 : light, light);
+        } else {
+            View decor = getWindow().getDecorView();
+            int light = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            decor.setSystemUiVisibility((decor.getSystemUiVisibility() & ~light) | (dark ? 0 : light));
+        }
     }
     private WebResourceResponse api(String address) throws Exception {
         if(!active||address==null)return error(503);
