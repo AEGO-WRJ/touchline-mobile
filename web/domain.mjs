@@ -4,7 +4,7 @@ export const nationalLeagues=[['fifa.world','世界杯','77'],['uefa.euro','欧�
 export const scheduleLeagues=[...leagues,...nationalLeagues];
 export const nationalNames={'England':'英格兰','France':'法国','Spain':'西班牙','Germany':'德国','Portugal':'葡萄牙','Italy':'意大利','Netherlands':'荷兰','Belgium':'比利时','Croatia':'克罗地亚','Denmark':'丹麦','Switzerland':'瑞士','Austria':'奥地利','Norway':'挪威','Sweden':'瑞典','Poland':'波兰','Serbia':'塞尔维亚','Türkiye':'土耳其','Turkey':'土耳其','Turkiye':'土耳其','Ukraine':'乌克兰','Scotland':'苏格兰','Wales':'威尔士','Czechia':'捷克','Czech Republic':'捷克','Greece':'希腊','Hungary':'匈牙利','China':'中国','China PR':'中国','Japan':'日本','South Korea':'韩国','Korea Republic':'韩国','Iran':'伊朗','Australia':'澳大利亚','Saudi Arabia':'沙特阿拉伯','Qatar':'卡塔尔','Uzbekistan':'乌兹别克斯坦','Iraq':'伊拉克','United Arab Emirates':'阿联酋','Jordan':'约旦','Oman':'阿曼','Bahrain':'巴林','Thailand':'泰国','Vietnam':'越南','Indonesia':'印度尼西亚'};
 export const isNational=id=>nationalLeagues.some(l=>l[0]===id);
-export const enabledLeagues=p=>scheduleLeagues.filter((l,i)=>(isNational(l[0])?p.national!==false:p.cups!==false||i<8||i>=12)&&(p.league==='national'?isNational(l[0]):!p.league||p.league==='all'||p.league===l[0]));
+export const enabledLeagues=p=>scheduleLeagues.filter((l,i)=>(p.scheduleScope!=='club'||!isNational(l[0]))&&(p.scheduleScope!=='national'||isNational(l[0]))&&(isNational(l[0])?p.national!==false:p.cups!==false||i<8||i>=12)&&(p.league==='national'?isNational(l[0]):!p.league||p.league==='all'||p.league===l[0]));
 export const dayKey=value=>new Date(new Date(value).getTime()+28800000).toISOString().slice(0,10);
 export const shiftDay=(day,n)=>new Date(Date.parse(day+'T00:00:00Z')+n*86400000).toISOString().slice(0,10);
 export function inScheduleWindow(match,date,now=Date.now()){
@@ -13,7 +13,7 @@ export function inScheduleWindow(match,date,now=Date.now()){
  return (match.state==='post'&&day>=shiftDay(date,-2)&&day<date)||(match.state==='in'&&day>=shiftDay(date,-2)&&day<date);
 }
 export function move(ids,id,offset){const result=[...ids],i=result.indexOf(id),j=i+Math.sign(offset);if(i>=0&&j>=0&&j<result.length){result.splice(i,1);result.splice(j,0,id);}return result;}
-export function select(matches,p={}){return [...new Map(matches.filter(m=>(!isNational(m.league)||p.national!==false)&&(!p.league||p.league==='all'||p.league===m.league||(p.league==='national'&&isNational(m.league)))&&(!p.live||m.state==='in')&&(!p.onlyFavorites||[m.home.id,m.away.id].some(id=>p.favorites.includes(id)))).map(m=>[m.id,m])).values()].sort((a,b)=>a.time-b.time||a.id.localeCompare(b.id));}
+export function select(matches,p={}){return [...new Map(matches.filter(m=>(p.scheduleScope!=='club'||!isNational(m.league))&&(p.scheduleScope!=='national'||isNational(m.league))&&(!isNational(m.league)||p.national!==false)&&(!p.league||p.league==='all'||p.league===m.league||(p.league==='national'&&isNational(m.league)))&&(!p.live||m.state==='in')&&(!p.onlyFavorites||[m.home.id,m.away.id].some(id=>p.favorites.includes(id)))).map(m=>[m.id,m])).values()].sort((a,b)=>a.time-b.time||a.id.localeCompare(b.id));}
 export function schedule(root,league){
  if(!Array.isArray(root.events))throw Error('赛程暂不可用');
  return root.events.flatMap(e=>{const c=e.competitions?.[0],h=c?.competitors?.find(x=>x.homeAway==='home'),a=c?.competitors?.find(x=>x.homeAway==='away');if(!h||!a||!e.id||!Number.isFinite(Date.parse(e.date)))return [];

@@ -30,6 +30,8 @@ nav{padding:8px 12px calc(8px + env(safe-area-inset-bottom));gap:8px}nav button{
 
 .board-filter-row{display:flex;align-items:center;gap:8px}.board-filter-row #season-toggle{flex-shrink:0;font-size:12px;white-space:nowrap;padding:10px;border-radius:10px}.league-scroll{position:relative;flex:1;min-width:0;margin:0;padding:0;scrollbar-width:none}.league-scroll button{font-size:13px;padding:10px 12px;white-space:nowrap}.board-selectors .season-grid{margin-top:10px;max-height:196px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.startup-art.has-crest svg{animation:crest-lines-hide .5s 1.4s linear forwards}@keyframes crest-lines-hide{to{opacity:0}}@media(prefers-reduced-motion:reduce){.startup-art.has-crest svg{animation:none;opacity:0}}
 
-body[data-page=schedule] header{position:sticky;top:0;z-index:4;background:var(--bg);padding:8px 0}body[data-page=schedule] .section-date{position:static}#today-anchor{scroll-margin-top:74px}
+body[data-page=schedule] header{position:sticky;top:0;z-index:4;background:var(--bg);padding:8px 0}body[data-page=schedule] .section-date{position:static}#today-anchor{scroll-margin-top:128px}
 
-.today-future{min-height:calc(100dvh - 140px);display:flow-root}
+.today-future{min-height:calc(100dvh - 194px);display:flow-root}
+
+.schedule-scope{position:sticky;top:64px;z-index:3;background:var(--bg);padding:6px 0}

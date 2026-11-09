@@ -1,9 +1,10 @@
 import {restore,persist,clearStore} from './cache-store.mjs';
 import {scheduleTTL,fresh,allFinal} from './cache-policy.mjs';
-const allowed=['site.api.espn.com','www.fotmob.com','data.fotmob.com','api.github.com','api.dongqiudi.com'];
+const allowed=['site.api.espn.com','www.fotmob.com','data.fotmob.com','api.github.com','api.dongqiudi.com','api.cntv.cn'];
 export async function request(url,signal){const u=new URL(url);if(u.protocol!=='https:'||!allowed.includes(u.hostname))throw Error('无效的数据地址');const timeout=AbortSignal.timeout(18000);const combined=signal?AbortSignal.any([signal,timeout]):timeout;const response=await fetch('/api?url='+encodeURIComponent(url),{signal:combined});if(!response.ok)throw Error('数据连接失败 '+response.status);return response.json();}
 const memory=new Map();let generation=0;
 function compact(url,value){
+ if(url.includes('api.cntv.cn/'))return {data:{list:value.data?.list?.map(a=>({id:a.id,title:a.title,url:a.url,image:a.image,focus_date:a.focus_date}))}};
  if(url.includes('/scoreboard?'))return {events:value.events};
  if(url.includes('/summary?'))return {header:value.header,rosters:value.rosters,boxscore:value.boxscore};
  if(url.includes('/matchDetails?'))return {general:value.general,header:value.header,content:{lineup:value.content?.lineup,matchFacts:value.content?.matchFacts,h2h:value.content?.h2h,stats:value.content?.stats,momentum:value.content?.momentum}};
@@ -14,7 +15,7 @@ function compact(url,value){
  if(url.includes('api.dongqiudi.com/'))return {next:value.next,articles:value.articles?.map(a=>({id:a.id,title:a.title,category:a.category,channel:a.channel,is_business_ad:a.is_business_ad,is_redirect_h5:a.is_redirect_h5,thumb:a.thumb,show_time:a.show_time,published_at:a.published_at,created_at:a.created_at,secondary_category:a.secondary_category}))};
  return value;
 }
-function retention(item){if(item.url.startsWith("rounds:"))return 14*86400000;if(item.url.includes("/news?")||item.url.includes("api.dongqiudi.com/"))return 3600000;if(item.url.includes('/scoreboard?')){if(item.value.events?.some(e=>(e.competitions?.[0]?.status||e.status)?.type?.state==='in'))return 21600000;return 14*86400000;}if(item.url.includes('/summary?')||item.url.includes('/matchDetails?'))return 7200000;return 43200000;}
+function retention(item){if(item.url.startsWith("rounds:"))return 14*86400000;if(item.url.includes("/news?")||item.url.includes("api.dongqiudi.com/")||item.url.includes("api.cntv.cn/"))return 3600000;if(item.url.includes('/scoreboard?')){if(item.value.events?.some(e=>(e.competitions?.[0]?.status||e.status)?.type?.state==='in'))return 21600000;return 14*86400000;}if(item.url.includes('/summary?')||item.url.includes('/matchDetails?'))return 7200000;return 43200000;}
 const sizes=new WeakMap();function bytes(item){if(!sizes.has(item))sizes.set(item,new TextEncoder().encode(JSON.stringify(item)).length);return sizes.get(item);}
 function prune(){const now=Date.now(),removed=[];let size=0,count=0;for(const [url,item] of [...memory].sort((a,b)=>b[1].time-a[1].time)){const n=bytes(item);if(now-item.time<0||now-item.time>retention(item)||size+n>16*1024*1024||count>=400){removed.push(url);}else{size+=n;count++;}}for(const url of removed)memory.delete(url);if(removed.length)persist([],removed);return size;}
 for(const item of await restore())memory.set(item.url,item);prune();

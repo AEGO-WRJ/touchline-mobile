@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/field"/>
+    <item>
+        <inset android:insetLeft="34.259259%" android:insetRight="34.259259%"
+            android:insetTop="34.259259%" android:insetBottom="34.259259%">
+            <bitmap android:src="@drawable/team_2570" android:gravity="fill"
+                android:filter="true" android:antialias="true" android:tileMode="disabled"/>
+        </inset>
+    </item>
+</layer-list>

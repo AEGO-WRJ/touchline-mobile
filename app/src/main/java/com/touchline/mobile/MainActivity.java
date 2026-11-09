@@ -77,7 +77,7 @@ public final class MainActivity extends Activity {
             @JavascriptInterface public void ready(String value){runOnUiThread(()->{pageReady=true;deliverMatch();notifyPermission();});}
             @JavascriptInterface public void notificationStatus(String value) {runOnUiThread(()->notifyPermission());}
             @JavascriptInterface public void openArticle(String value) {
-                try {Uri uri=Uri.parse(new JSONObject(value).getString("url"));String host=uri.getHost();if(!"https".equals(uri.getScheme())||host==null||!(host.equals("espn.com")||host.endsWith(".espn.com")||(host.equals("www.dongqiudi.com")&&uri.getPath().matches("/article/[0-9]+")))||uri.getUserInfo()!=null)return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,uri));}catch(Exception ignored){}});}catch(Exception ignored){}
+                try {Uri uri=Uri.parse(new JSONObject(value).getString("url"));String host=uri.getHost();if(!"https".equals(uri.getScheme())||host==null||uri.getUserInfo()!=null||uri.getPort()!=-1)return;boolean allowed=host.equals("espn.com")||host.endsWith(".espn.com")||(host.equals("www.dongqiudi.com")&&uri.getPath().matches("/article/[0-9]+"))||(host.equals("sports.cctv.com")&&uri.getPath().matches("/[0-9]{4}/[0-9]{2}/[0-9]{2}/ARTI[a-zA-Z0-9]+[.]shtml"));if(!allowed)return;runOnUiThread(()->{try{startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,uri));}catch(Exception ignored){}});}catch(Exception ignored){}
             }
             @JavascriptInterface public void appearance(String value) {
                 try {JSONObject p=new JSONObject(value);boolean dark=p.optBoolean("dark",true);int color=Color.parseColor(p.getString("background"));runOnUiThread(()->{if(web==null)return;web.setBackgroundColor(color);content.setBackgroundColor(color);getWindow().setStatusBarColor(color);getWindow().setNavigationBarColor(color);setSystemBarAppearance(dark);});}catch(Exception ignored){}
@@ -111,7 +111,7 @@ public final class MainActivity extends Activity {
                     if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","cache-policy.mjs","cache-store.mjs","info-model.mjs","info.mjs","news-model.mjs","news.mjs","match-data.mjs","match-events.mjs","round-cache.mjs","startup.mjs","catalog.json").contains(path))return error(404);
                     String mime=path.endsWith(".mjs")?"text/javascript":path.endsWith(".css")?"text/css":path.endsWith(".json")?"application/json":"text/html";
                     Map<String,String> headers=new HashMap<>();
-                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.espncdn.com https://images.fotmob.com https://*.qunliao.info; connect-src 'self'; object-src 'none'; base-uri 'none'");
+                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.espncdn.com https://images.fotmob.com https://*.qunliao.info https://*.img.cctvpic.com; connect-src 'self'; object-src 'none'; base-uri 'none'");
                     return new WebResourceResponse(mime,"UTF-8",200,"OK",headers,getAssets().open(path));
                 } catch(Exception e) { return error(503); }
             }
@@ -133,7 +133,7 @@ public final class MainActivity extends Activity {
         if(!active||address==null)return error(503);
         URL url=new URL(address);
         boolean update=url.getHost().equals("api.github.com")&&url.getPath().equals("/repos/AEGO-WRJ/touchline-mobile/releases/latest");
-        boolean news=url.getHost().equals("api.dongqiudi.com")&&url.getPath().matches("/app/tabs/web/[0-9]+[.]json");
+        boolean news=(url.getHost().equals("api.dongqiudi.com")&&url.getPath().matches("/app/tabs/web/[0-9]+[.]json"))||(url.getHost().equals("api.cntv.cn")&&url.getPath().equals("/newList/getMixListByPageId"));
         if(!"https".equals(url.getProtocol())||(!update&&!news&&!Arrays.asList("site.api.espn.com","www.fotmob.com","data.fotmob.com").contains(url.getHost()))||url.getUserInfo()!=null)return error(403);
         if(!slots.tryAcquire(18,TimeUnit.SECONDS))return error(503);
         HttpURLConnection c=null;
