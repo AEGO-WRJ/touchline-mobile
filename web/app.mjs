@@ -9,7 +9,9 @@ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 const catalog=await (await fetch('catalog.json')).json();
 const aliases={Tottenham:'Tottenham Hotspur',Brighton:'Brighton & Hove Albion',Wolves:'Wolverhampton Wanderers',Newcastle:'Newcastle United',Inter:'Internazionale',PSG:'Paris Saint-Germain','Bayern München':'Bayern Munich','Atletico Madrid':'Atlético Madrid','Athletic Bilbao':'Athletic Club'};
 const name=s=>catalog.names[aliases[s]||s]||aliases[s]||s||'待定';
-const crest=(url,size='')=>/^https:\/\/a\.espncdn\.com\//.test(url||'')?`<img class="crest ${size}" src="${esc(url)}" alt="" loading="lazy">`:'';
+const localCrests=new Set(catalog.teams.map(t=>String(t.Id)));
+const crestURL=url=>{const id=String(url||'').match(/\/([0-9]+)[.]png(?:[?].*)?$/)?.[1];return window.Touchline&&localCrests.has(id)?'crest-'+id+'.png':url;};
+const crest=(url,size='')=>/^https:\/\/a\.espncdn\.com\//.test(url||'')?`<img class="crest ${size}" src="${esc(crestURL(url))}" alt="" loading="lazy">`:'';
 document.addEventListener('error',e=>{if(e.target.tagName==='IMG')e.target.style.visibility='hidden';},true);
 const defaults={favorites:[],onlyFavorites:false,onlyGoals:false,cups:true,live:false,league:'all',goalAlerts:true,mode:'dark',palette:'green',teamIcon:false,backgroundAlerts:false,subscriptions:[],infoFollows:[]};let prefs;try{prefs={...defaults,...JSON.parse(localStorage.getItem('preferences')||'{}')};if(!Array.isArray(prefs.favorites))prefs.favorites=[];}catch{prefs={...defaults};}
 let page='schedule',date=dayKey(Date.now()),followToday=true,matches=[],controller,detailController,currentMatch,teams=[],starting=false,active=true,sequence=0,timer;

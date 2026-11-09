@@ -100,10 +100,16 @@ public final class MainActivity extends Activity {
                     if("/api".equals(uri.getPath())) return api(uri.getQueryParameter("url"));
                     String path=uri.getPath().substring(1);
                     if(path.isEmpty())path="index.html";
-                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","cache-policy.mjs","cache-store.mjs","info-model.mjs","info.mjs","news-model.mjs","news.mjs","match-data.mjs","match-events.mjs","round-cache.mjs","catalog.json").contains(path))return error(404);
+                    if(path.matches("crest-[0-9]+[.]png")) {
+                        String id=path.substring(6,path.length()-4);
+                        int resource=getResources().getIdentifier("team_"+id,"drawable",getPackageName());
+                        if(resource==0)return error(404);
+                        return new WebResourceResponse("image/png",null,getResources().openRawResource(resource));
+                    }
+                    if(path.contains("..")||path.contains("/")||!Arrays.asList("index.html","style.css","app.mjs","domain.mjs","transport.mjs","appearance.mjs","cache-policy.mjs","cache-store.mjs","info-model.mjs","info.mjs","news-model.mjs","news.mjs","match-data.mjs","match-events.mjs","round-cache.mjs","startup.mjs","catalog.json").contains(path))return error(404);
                     String mime=path.endsWith(".mjs")?"text/javascript":path.endsWith(".css")?"text/css":path.endsWith(".json")?"application/json":"text/html";
                     Map<String,String> headers=new HashMap<>();
-                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src https://a.espncdn.com https://images.fotmob.com https://*.qunliao.info; connect-src 'self'; object-src 'none'; base-uri 'none'");
+                    headers.put("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.espncdn.com https://images.fotmob.com https://*.qunliao.info; connect-src 'self'; object-src 'none'; base-uri 'none'");
                     return new WebResourceResponse(mime,"UTF-8",200,"OK",headers,getAssets().open(path));
                 } catch(Exception e) { return error(503); }
             }
