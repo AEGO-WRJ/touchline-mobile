@@ -3,6 +3,12 @@ function simplify(points){
  for(let i=1;i<points.length-1;i++){const p=points[i],t=length?Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/length)):0,d=(p[0]-a[0]-t*dx)**2+(p[1]-a[1]-t*dy)**2;if(d>far){far=d;index=i;}}
  return index?[...simplify(points.slice(0,index+1)).slice(0,-1),...simplify(points.slice(index))]:[a,b];
 }
+function smoothPath(points){
+ const vertices=simplify(points);if(vertices.length<4)return '';vertices.pop();
+ const mix=(a,b,d)=>{const length=Math.hypot(b[0]-a[0],b[1]-a[1]),t=length?Math.min(d/length,.3):0;return a.map((v,i)=>+(v+(b[i]-v)*t).toFixed(2));};
+ const corners=vertices.map((p,i)=>({p,before:mix(p,vertices[(i+vertices.length-1)%vertices.length],1.5),after:mix(p,vertices[(i+1)%vertices.length],1.5)}));
+ return 'M'+corners.at(-1).after.join(',')+corners.map(c=>'L'+c.before.join(',')+'Q'+c.p.join(',')+' '+c.after.join(',')).join('')+'Z';
+}
 // Trace opaque pixel boundaries; disconnected islands and holes remain separate paths.
 export function outline(alpha,width,height){
  const edges=new Map(),solid=(x,y)=>x>=0&&y>=0&&x<width&&y<height&&alpha[(y*width+x)*4+3]>48;
@@ -13,8 +19,8 @@ export function outline(alpha,width,height){
  }
  const paths=[];while(edges.size){const start=edges.keys().next().value;let key=start,points=[start];
   do{const list=edges.get(key);if(!list?.length)break;const end=list.pop();if(!list.length)edges.delete(key);key=end.join(',');points.push(key);}while(key!==start);
-  if(points.length>8)paths.push({d:'M'+simplify(points.map(p=>p.split(',').map(Number))).map(p=>p.join(',')).join('L')+'Z',length:points.length});
- }return paths.sort((a,b)=>b.length-a.length).slice(0,32).map(p=>p.d);
+  if(points.length>8)paths.push({d:smoothPath(points.map(p=>p.split(',').map(Number))),length:points.length});
+ }return paths.sort((a,b)=>b.length-a.length).slice(0,32).map(p=>p.d).filter(Boolean);
 }
 export function crestLines(data,width,height){
  const bins=new Map();for(let i=0;i<data.length;i+=4){if(data[i+3]<96)continue;const key=[data[i]>>5,data[i+1]>>5,data[i+2]>>5].join(',');const b=bins.get(key)||{n:0,r:0,g:0,b:0};b.n++;b.r+=data[i];b.g+=data[i+1];b.b+=data[i+2];bins.set(key,b);}
@@ -36,9 +42,9 @@ export function startSplash(){
  fetch('catalog.json').then(r=>r.json()).then(c=>{if(closed)return;const team=c.teams.find(t=>String(t.Id)===String(id));if(team){cover.querySelector('h2').textContent=c.names[team.Name]||team.Name;cover.querySelector('.startup-brand').textContent='我的主队';}}).catch(()=>{});
  const img=new Image();img.alt='主队队徽';img.className='startup-crest';img.src='crest-'+id+'.png';
  img.onload=()=>{if(closed)return;try{
-  const canvas=document.createElement('canvas');canvas.width=canvas.height=192;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,16,16,160,160);
-  const paths=crestLines(ctx.getImageData(0,0,192,192).data,192,192);if(!paths.length)return;
-  const group=cover.querySelector('g');group.replaceChildren();for(const [i,line] of paths.entries()){const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',line.d);path.setAttribute('pathLength','1');path.style.stroke=line.color;path.style.animationDelay=(i%5)*.065+'s';group.append(path);}
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=600;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(img,50,50,500,500);
+  const paths=crestLines(ctx.getImageData(0,0,600,600).data,600,600);if(!paths.length)return;
+  cover.querySelector('svg').setAttribute('viewBox','0 0 600 600');const group=cover.querySelector('g');group.replaceChildren();for(const [i,line] of paths.entries()){const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',line.d);path.setAttribute('pathLength','1');path.setAttribute('vector-effect','non-scaling-stroke');path.style.stroke=line.color;path.style.animationDelay=(i%5)*.065+'s';group.append(path);}
   cover.querySelector('.startup-art').prepend(img);
  }catch{/* Keep the local football fallback if this crest cannot be decoded. */}};
 }
