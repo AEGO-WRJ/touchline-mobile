@@ -40,7 +40,7 @@ export function startSplash(){
  document.body.append(cover);
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let closed=false;const close=()=>{if(closed)return;closed=true;clearTimeout(timer);cover.remove();};
- const timer=setTimeout(close,reduced?500:3400);cover.querySelector('button').onclick=close;
+ let timer=setTimeout(close,reduced?500:2600);cover.querySelector('button').onclick=close;
  let prefs;try{prefs=JSON.parse(localStorage.getItem('preferences')||'{}');}catch{prefs={};}
  const id=prefs?.favorites?.[0];if(!/^\d+$/.test(String(id||'')))return;
  fetch('catalog.json').then(r=>r.json()).then(c=>{if(closed)return;const team=c.teams.find(t=>String(t.Id)===String(id));if(team){cover.querySelector('h2').textContent=c.names[team.Name]||team.Name;cover.querySelector('.startup-brand').textContent='我的主队';}}).catch(()=>{});
@@ -49,7 +49,7 @@ export function startSplash(){
   const canvas=document.createElement('canvas');canvas.width=canvas.height=600;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(img,50,50,500,500);
   const paths=crestLines(ctx.getImageData(0,0,600,600).data,600,600);if(!paths.length)return;
   cover.querySelector('svg').setAttribute('viewBox','0 0 600 600');const group=cover.querySelector('g');group.replaceChildren();for(const line of paths){const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',line.d);path.setAttribute('pathLength','1');path.setAttribute('vector-effect','non-scaling-stroke');path.style.stroke=line.color;group.append(path);}
-  cover.querySelector('.startup-art').prepend(img);
+  const art=cover.querySelector('.startup-art');art.prepend(img);art.classList.add('has-crest');if(!reduced){clearTimeout(timer);timer=setTimeout(close,2600);}
  }catch{/* Keep the local football fallback if this crest cannot be decoded. */}};
 }
 if(typeof window!=='undefined'&&window.Touchline)startSplash();
