@@ -69,6 +69,8 @@ public final class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.addJavascriptInterface(new Object() {
+            @JavascriptInterface public void widget(String value){try{MatchWidget.configure(MainActivity.this,new JSONObject(value));}catch(Exception ignored){}}
+            @JavascriptInterface public void addWidget(String value){runOnUiThread(()->{android.appwidget.AppWidgetManager manager=android.appwidget.AppWidgetManager.getInstance(MainActivity.this);if(manager.isRequestPinAppWidgetSupported())manager.requestPinAppWidget(new android.content.ComponentName(MainActivity.this,MatchWidget.class),null,null);else Toast.makeText(MainActivity.this,"请长按桌面，在小组件中选择看球",Toast.LENGTH_LONG).show();});}
             @JavascriptInterface public void subscriptions(String value) {
                 try {JSONObject p=new JSONObject(value);MatchAlerts.configure(MainActivity.this,p);runOnUiThread(()->{if(p.optBoolean("enabled")&&p.optBoolean("prompt")&&android.os.Build.VERSION.SDK_INT>=33&&checkSelfPermission("android.permission.POST_NOTIFICATIONS")!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"},4101);else if(p.optBoolean("enabled")&&p.optBoolean("prompt")&&!MatchAlerts.permitted(MainActivity.this))startActivity(new android.content.Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(android.provider.Settings.EXTRA_APP_PACKAGE,getPackageName()));notifyPermission();});}catch(Exception ignored){}
             }

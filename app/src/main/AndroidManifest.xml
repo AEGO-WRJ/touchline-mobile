@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application android:label="看球" android:icon="@mipmap/launcher" android:roundIcon="@mipmap/launcher" android:allowBackup="false" android:usesCleartextTraffic="false" android:theme="@android:style/Theme.Material.NoActionBar" android:supportsRtl="true">
+        <receiver android:name=".MatchWidget" android:label="看球 · 主队比赛" android:exported="false"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/match_widget"/></receiver><service android:name=".MatchWidget$RefreshJob" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true"/>
         <service android:name=".MatchAlerts" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="true" />
         <activity android:name=".MainActivity" android:exported="true" android:enableOnBackInvokedCallback="false" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="adjustResize">
         </activity>
