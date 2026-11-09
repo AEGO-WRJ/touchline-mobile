@@ -1,4 +1,4 @@
-export const version='1.5.2';
+export const version='1.5.3';
 export const palettes={green:['球场绿','#75efbd','#08734c'],blue:['海洋蓝','#8ec5ff','#165bb0'],purple:['鸢尾紫','#c8acff','#7345b5'],orange:['落日橙','#ffbd82','#9d4d09'],gray:['石墨灰','#d2dce3','#405465']};
 export function newer(a,b){if(!/^v?\d+\.\d+\.\d+$/.test(a))return false;const x=a.replace(/^v/,'').split('.').map(Number),y=b.split('.').map(Number);for(let i=0;i<3;i++){if(x[i]!==y[i])return x[i]>y[i];}return false;}
 export function releaseInfo(r){if(r.draft||r.prerelease||!newer(r.tag_name,version))return null;const asset=r.assets?.find(a=>a.name===`Touchline-Android-${r.tag_name}.apk`&&a.browser_download_url===`https://github.com/AEGO-WRJ/touchline-mobile/releases/download/${r.tag_name}/${a.name}`);if(!asset)throw Error('安装包尚未发布');return {version:r.tag_name,url:asset.browser_download_url};}
